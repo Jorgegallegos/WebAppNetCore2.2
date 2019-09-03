@@ -30,7 +30,7 @@ namespace WebAppNetCore2._2
 
             services.AddDbContext<MyAppContext>(options => options.UseSqlServer(Configuration["ConnectionString:MyApp"]));
 
-            //services.AddCors();
+            services.AddCors();
 
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
@@ -72,7 +72,7 @@ namespace WebAppNetCore2._2
             });
 
 
-            //app.UseCors(o => o.AllowAnyOrigin());
+            app.UseCors(o => o.AllowAnyOrigin());
             app.UseHttpsRedirection();
             app.UseMvc();
         }
