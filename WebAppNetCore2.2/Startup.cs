@@ -1,12 +1,15 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
 using System.IO;
 using System.Reflection;
+using WebAppNetCore2._2.Data;
 
 namespace WebAppNetCore2._2
 {
@@ -22,6 +25,13 @@ namespace WebAppNetCore2._2
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+            services.AddDbContext<MyAppContext>(options => options.UseSqlServer(Configuration["ConnectionString:MyApp"]));
+
+            //services.AddCors();
+
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
 
             // Register the Swagger generator, defining 1 or more Swagger documents
@@ -62,6 +72,7 @@ namespace WebAppNetCore2._2
             });
 
 
+            //app.UseCors(o => o.AllowAnyOrigin());
             app.UseHttpsRedirection();
             app.UseMvc();
         }
